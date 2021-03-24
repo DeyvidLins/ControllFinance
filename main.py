@@ -1,92 +1,68 @@
 from openpyxl import Workbook # pip install openpyxl
 from openpyxl.styles import Font, Color, colors
-#import pandas as pd
-
-
-
-listDesc=["Descrição"]
-listValor=["Valor"]
-listData=["Data de Vencimento"]
-listPag=["Data que foi pago"]
-listValorPag=["Valor pago"]
-listDev=["Devendo"]
-listStatus=["Status"]
-
+import  ConexaoBD
+import pandas as pd
 
 wb = Workbook()
 ws1 = wb.active # work sheet
 ws1.title = "Pyxl"
 
-# Realiza a leitura  do arquvio excel através da biblioteca Pandas
+#Realiza a leitura  do arquvio excel através da biblioteca Pandas
 #x = pd.read_excel(r"C:\Users\Deyvid\Desktop\Repo-GitHub\pythonExcel\ControleFinanceiro.xlsx")
 #print(x)
 
-ws1.cell(column=1, row=1, value=listDesc[0])
-ws1.cell(column=2, row=1, value=listValor[0])
-ws1.cell(column=3, row=1, value=listData[0])
-ws1.cell(column=4, row=1, value=listPag[0])
-ws1.cell(column=5, row=1, value=listValorPag[0])
-ws1.cell(column=6, row=1, value=listDev[0])
-ws1.cell(column=7, row=1, value=listStatus[0])
+listDesc=[]
+listValor=[]
+listData=[]
+listPag=[]
+listValorPag=[]
+listDev=[]
+listStatus=[]
+
+ws1["A1"]='Descrição'
+ws1["B1"]='Valor'
+ws1["C1"]='Data de Vencimento'
+ws1["D1"]='Data de Pagamento'
+ws1["E1"]='Valor que foi pago'
+ws1["F1"]='Devendo'
+ws1["G1"]='Status'
+
+conection= ConexaoBD.cur
 
 
-cont = 1
-info = input('Deseja continuar? Digite C para continuar e S para sair:')
-while True:
-
-    if info.lower() =="c" or info.upper() == "C":
-
-        desc = input('Digite à descrição do produto:')
-        listDesc.append(desc)
-        for i in range (1,len(listDesc)):
-            ws1.cell(column=1, row=i+ 1, value=listDesc[i])
+for i in conection.execute("select desc from financa; ").fetchall():
+    listDesc.append(i[0])
+    ws1.cell(column=1, row=len(listDesc) + 1 , value=i[0])
 
 
-        valor = float(input(f'Digite o valor do produto {desc}:'))
-        listValor.append(valor)
-        for i in range (1,len(listValor)):
-            ws1.cell(column=2, row=i + 1, value=listValor[i])
+for i in conection.execute("select valor from financa; ").fetchall():
+    listValor.append(i[0])
+    ws1.cell(column=2, row=len(listValor) + 1, value=i[0])
 
-        dataVenc = input(f'Digite a data de Vencimento do produto {desc}:')
-        listData.append(dataVenc)
-        for i in range (1,len(listData)):
-            ws1.cell(column=3, row=i+ 1, value=listData[i])
+for i in conection.execute("select dataVenc from financa; ").fetchall():
+    listData.append(i[0])
+    ws1.cell(column=3, row=len(listData) + 1, value=i[0])
 
-        pag = input(f'Informe a data que foi realizado o pagamento do produto {desc}:')
-        listPag.append(pag)
-        for i in range (1,len(listPag)):
-            ws1.cell(column=4, row=i + 1, value=listPag[i])
+for i in conection.execute("select dataPag from financa; ").fetchall():
+    listPag.append(i[0])
+    ws1.cell(column=4, row=len(listPag) + 1, value=i[0])
 
-        valorPag = float(input(f'Informe o valor que foi pago do produto {desc}:'))
-        listValorPag.append(valorPag)
-        for i in range (1,len(listValor)):
-            ws1.cell(column=5, row=i+ 1, value=listValorPag[i])
+for i in conection.execute("select valorPag from financa; ").fetchall():
+    listValorPag.append(i[0])
+    ws1.cell(column=5, row=len(listValorPag) + 1, value=i[0])
 
-        devendo = float(listValor[cont]- listValorPag[cont])
-        listDev.append(devendo)
-        for i in range (1,len(listDev)):
-            ws1.cell(column=6, row=i+ 1, value=listDev[i])
+for i in conection.execute("select devendo from financa; ").fetchall():
+    listDev.append(i[0])
+    ws1.cell(column=6, row=len(listDev) + 1, value=i[0])
 
-        status = input(f'Infome PG para PAGO ou NP para NÃO PAGO:')
-        listStatus.append(status.upper())
-        for i in range (1,len(listStatus)):
-            ws1.cell(column=7, row=i + 1, value=listStatus[i])
-
-        cont +=1
-
-    elif info.lower()=="s" or info.upper() == "S":
-        print ('Saindo....')
-        break
-    else:
-        print('Saindo....')
-        break
-    info = input('Deseja continuar? Digite C para continuar e S para sair:')
+for i in conection.execute("select status from financa; ").fetchall():
+    listStatus.append(i[0])
+    ws1.cell(column=7, row=len(listStatus) + 1, value=i[0])
 
 
 
-
-ws1["H13"]='TOTAL'
-ws1["I13"]='=SUM(F2:B50)'
+ws1["H13"]='TOTAL DE DÍVIDA'
+ws1["I13"]='=SUM(F2:F50)'
 
 
 ft_a = Font(name='Times New Roman',color=colors.BLACK, bold=True, size=12)
@@ -109,4 +85,3 @@ g1.font = ft_a
 h13.font = ft_a
 
 wb.save('ControleFinanceiro.xlsx')
-
