@@ -1,7 +1,23 @@
-
 import sqlite3
 conn = sqlite3.connect('Financeiro.db')
 cur = conn.cursor()
+
+import pyrebase
+
+firebaseConfig = {
+    "apiKey": "AIzaSyAH61Y2Jb-1sbc1a2WvhaDELuE7FnefHKk",
+    "authDomain": "controllfinance-44ace.firebaseapp.com",
+    "databaseURL": "https://controllfinance-44ace-default-rtdb.firebaseio.com",
+    "projectId": "controllfinance-44ace",
+    "storageBucket": "controllfinance-44ace.appspot.com",
+    "messagingSenderId": "11399726819",
+    "appId": "1:11399726819:web:90d2d1b80a44d8509427d6",
+    "measurementId": "G-LBGD17T06B"
+  }
+
+firebase = pyrebase.initialize_app(firebaseConfig)
+bd = firebase.database()
+
 
 
 listDesc=[]
@@ -70,6 +86,8 @@ while True:
         cur.execute(f'''INSERT INTO financa (desc,valor,dataVenc,dataPag,valorPag,devendo,status) 
                                            VALUES ('{listDesc[cont]}','{listValor[cont]}','{listData[cont]}','{listPag[cont]}','{listValorPag[cont]}', '{listDev[cont]}', '{listStatus[cont]}');''')
 
+
+
         conn.commit()
         cont += 1
 
@@ -83,6 +101,9 @@ while True:
         print('Saindo....')
         break
     info = input('Deseja continuar? Digite C para continuar e S para sair:')
+
+
+
 
 
 

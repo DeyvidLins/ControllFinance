@@ -28,6 +28,8 @@ ws1["F1"]='Devendo'
 ws1["G1"]='Status'
 
 conection= ConexaoBD.cur
+conectionFireBase = ConexaoBD.bd
+
 
 
 for i in conection.execute("select desc from financa; ").fetchall():
@@ -38,6 +40,7 @@ for i in conection.execute("select desc from financa; ").fetchall():
 for i in conection.execute("select valor from financa; ").fetchall():
     listValor.append(i[0])
     ws1.cell(column=2, row=len(listValor) + 1, value=i[0])
+
 
 for i in conection.execute("select dataVenc from financa; ").fetchall():
     listData.append(i[0])
@@ -59,6 +62,12 @@ for i in conection.execute("select status from financa; ").fetchall():
     listStatus.append(i[0])
     ws1.cell(column=7, row=len(listStatus) + 1, value=i[0])
 
+cont = 0
+for i in conection.execute("select * from financa; ").fetchall():
+    conectionFireBase.child("Finance").push({"Descrição": f"{listDesc[cont]}","Valor": f"{listValor[cont]}" , "Data de Vencimento": f"{listData[cont]}",
+                       "Data de Pagamento": f"{listPag[cont]}", "Valor que foi pago": f"{listValorPag[cont]}", "Devendo": f"{listDev[cont]}",
+                        "Status": f"{listStatus[cont]}"})
+    cont += 1
 
 
 ws1["H13"]='TOTAL DE DÍVIDA'
