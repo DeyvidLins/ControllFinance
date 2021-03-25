@@ -1,6 +1,8 @@
 from openpyxl import Workbook # pip install openpyxl
 from openpyxl.styles import Font, Color, colors
 import  ConexaoBD
+import Form
+
 import pandas as pd
 
 wb = Workbook()
@@ -62,6 +64,8 @@ for i in conection.execute("select status from financa; ").fetchall():
     listStatus.append(i[0])
     ws1.cell(column=7, row=len(listStatus) + 1, value=i[0])
 
+
+#Inserindo dados no FireBase
 cont = 0
 for i in conection.execute("select * from financa; ").fetchall():
     conectionFireBase.child("Finance").push({"Descrição": f"{listDesc[cont]}","Valor": f"{listValor[cont]}" , "Data de Vencimento": f"{listData[cont]}",

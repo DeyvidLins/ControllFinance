@@ -1,9 +1,12 @@
 import sqlite3
+import pyrebase
+
+
 conn = sqlite3.connect('Financeiro.db')
 cur = conn.cursor()
 
-import pyrebase
 
+#String/Dicionário de Conexão com o Firebase
 firebaseConfig = {
     "apiKey": "AIzaSyAH61Y2Jb-1sbc1a2WvhaDELuE7FnefHKk",
     "authDomain": "controllfinance-44ace.firebaseapp.com",
@@ -19,17 +22,6 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 bd = firebase.database()
 
 
-
-listDesc=[]
-listValor=[]
-listData=[]
-listPag=[]
-listValorPag=[]
-listDev=[]
-listStatus=[]
-
-
-
 def create_sql(): # Funcao CRIAR
     cur.execute('''CREATE TABLE financa(id INTEGER PRIMARY KEY AUTOINCREMENT, desc VARCHAR(100) NOT NULL, 
                valor FLOAT NOT NULL,  dataVenc VARCHAR(15) NOT NULL,  dataPag varchar(15) NOT NULL, valorPag FLOAT NOT NULL,
@@ -42,66 +34,29 @@ verify = cur.execute("SELECT name FROM sqlite_master where name ='financa' ")
 
 verify = cur.fetchone()
 
+# Se a Tabela não foi Criado no banco ele executar a função create_sql()
 if verify is None:
     create_sql()
 
+class ConectionForm():
+    def __init__(self,desc = '', valor = '', dataVenc = '', dataPag = '', valorPag = '', devendo = '', status = ''):
 
+        self.desc = desc
+        self.valor = valor
+        self.dataVenc = dataVenc
+        self.dataPag = dataPag
+        self.valorPag = valorPag
+        self.devendo = devendo
+        self.status = status
 
-cont = 0
-info = input('Deseja continuar? Digite C para continuar e S para sair:')
-while True:
-
-    if info.lower() == "c" or info.upper() == "C":
-
-        desc = input('Digite à descrição do produto:')
-        listDesc.append(desc)
-
-
-        valor = float(input(f'Digite o valor do produto {desc}:'))
-        listValor.append(valor)
-
-
-        dataVenc = input(f'Digite a data de Vencimento do produto {desc}:')
-        listData.append(dataVenc)
-
-
-        dataPag = input(f'Informe a data que foi realizado o pagamento do produto {desc}:')
-        listPag.append(dataPag)
-
-
-        valorPag = float(input(f'Informe o valor que foi pago do produto {desc}:'))
-        listValorPag.append(valorPag)
-
-
-
-        devendo = float(listValor[cont] - listValorPag[cont])
-        listDev.append(devendo)
-
-
-        status = input(f'Infome PG para PAGO ou NP para NÃO PAGO:')
-        listStatus.append(status.upper())
-
-
+    def __str__(self):
 
         cur.execute(f'''INSERT INTO financa (desc,valor,dataVenc,dataPag,valorPag,devendo,status) 
-                                           VALUES ('{listDesc[cont]}','{listValor[cont]}','{listData[cont]}','{listPag[cont]}','{listValorPag[cont]}', '{listDev[cont]}', '{listStatus[cont]}');''')
+                                                   VALUES ('{self.desc}','{self.valor}','{self.dataVenc}','{self.dataPag}',
+                                                   '{self.valorPag}', '{self.devendo}', '{self.status}');''')
 
-
-
-        conn.commit()
-        cont += 1
-
-
-
-
-    elif info.lower() == "s" or info.upper() == "S":
-        print('Saindo....')
-        break
-    else:
-        print('Saindo....')
-        break
-    info = input('Deseja continuar? Digite C para continuar e S para sair:')
-
+        return conn.commit()
+        conn.close()
 
 
 
