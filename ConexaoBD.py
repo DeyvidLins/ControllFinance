@@ -56,18 +56,14 @@ class ConectionForm():
                                                    '{self.valorPag}', '{self.devendo}', '{self.status}');''')
 
         return conn.commit()
-        conn.close()
 
+'''def listar_dados():
+    cur.execute("select * from financa")
 
+    c = cur.fetchall()
 
+    conn.commit()
 
-
-
-
-
-
-
-
-
+    return f'{c}'''
 
 

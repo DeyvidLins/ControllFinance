@@ -2,8 +2,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from ConexaoBD import ConectionForm
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+class TelaInserir(object):
+    def setupInserir(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(633, 612)
         MainWindow.setStyleSheet("background-color: rgb(174, 142, 255);")
@@ -159,29 +159,23 @@ class Ui_MainWindow(object):
         self.actionConsultar.setText(_translate("MainWindow", "Consultar"))
         self.actionAtualizar_comprar_D_vidas.setText(_translate("MainWindow", "Atualizar comprar/Dívidas"))
 
-        # Lançamento dos dados para o banco
+        # Botão Salvar
         self.pushButton.clicked.connect(self.inserir_banco)
 
-
+    # Lançamento dos dados para o banco
     def inserir_banco(self):
 
-        ConectionFo = ConectionForm(self.lineEdit.text(), self.lineEdit_2.text(),self.dateEdit.text(),
+        c = ConectionForm(self.lineEdit.text(), self.lineEdit_2.text(),self.dateEdit.text(),
                                     self.dateEdit_2.text(),self.lineEdit_5.text(), self.lineEdit_6.text(), self.comboBox.currentText())
 
-
-        print(ConectionFo)
-
-
+        return f'{c}'
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
+    ui = TelaInserir()
+    ui.setupInserir(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
-
-
