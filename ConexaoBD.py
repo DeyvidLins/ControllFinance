@@ -22,24 +22,15 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 bd = firebase.database()
 
 
-def create_sql(): # Funcao CRIAR
-    cur.execute('''CREATE TABLE financa(id INTEGER PRIMARY KEY AUTOINCREMENT, desc VARCHAR(100) NOT NULL, 
-               valor FLOAT NOT NULL,  dataVenc VARCHAR(15) NOT NULL,  dataPag varchar(15) NOT NULL, valorPag FLOAT NOT NULL,
-               devendo  FLOAT NOT NULL, status varchar(2));''')
-    conn.commit()
-
-
-
-verify = cur.execute("SELECT name FROM sqlite_master where name ='financa' ")
-
-verify = cur.fetchone()
-
-# Se a Tabela não for Criada no banco, executar a função create_sql()
-if verify is None:
-    create_sql()
-
 class ConectionForm():
-    # Função para inserir dados no Sqllite
+    # Função para Criar as tabelas no banco
+    def create_sql(self):  # Funcao CRIAR
+        cur.execute('''CREATE TABLE financa(id INTEGER PRIMARY KEY AUTOINCREMENT, desc VARCHAR(100) NOT NULL, 
+                   valor FLOAT NOT NULL,  dataVenc VARCHAR(15) NOT NULL,  dataPag varchar(15) NOT NULL, valorPag FLOAT NOT NULL,
+                   devendo  FLOAT NOT NULL, status varchar(2));''')
+        conn.commit()
+
+    # Função para Inserir dados
     def inserir (self,desc = '', valor = '', dataVenc = '', dataPag = '', valorPag = '', devendo = '', status = ''):
 
         self.desc = desc
@@ -58,13 +49,13 @@ class ConectionForm():
         conn.close()
 
 
-    # Função para listar dados no Sqllite
-    def banco_dados(self, table):
+    # Função para Listar dados
+    def listar(self, table):
 
         # Retorna uma lista do sql
         conn = sqlite3.connect('Financeiro.db')
         cur = conn.cursor()
-        cur.execute("select * from financa")
+        cur.execute("SELECT * FROM financa")
         c = cur.fetchall()
         table.setRowCount(len(c))
         table.setColumnCount(8)
@@ -76,4 +67,26 @@ class ConectionForm():
         conn.commit()
         conn.close()
 
+    # Função para Excluir dados
+    def excluir(self, linha):
+        cur.execute("SELECT id FROM financa")
+        c = cur.fetchall()
+        id = c[linha][0]
+        cur.execute(f"delete from financa where id = {id}")
+
+
+        conn.commit()
+        conn.close()
+
+ #   def atualizar(self):
+
+
+
+verify = cur.execute("SELECT name FROM sqlite_master WHERE name ='financa' ")
+
+verify = cur.fetchone()
+
+# Se a Tabela não for Criada no banco, executar a função create_sql()
+if verify is None:
+    ConectionForm().create_sql()
 

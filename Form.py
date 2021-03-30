@@ -86,7 +86,7 @@ class TelaInserir(object):
         font.setPointSize(18)
         self.pushButton.setFont(font)
         self.pushButton.setStyleSheet("\n"
-"background-color: rgb(187, 175, 255);")
+"background-color: rgb(0, 255, 127);")
         self.pushButton.setObjectName("pushButton")
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setGeometry(QtCore.QRect(290, 120, 321, 21))
