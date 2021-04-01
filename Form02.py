@@ -3,6 +3,7 @@ from ConexaoBD import ConectionForm
 from ConexaoBD import  selecionar
 
 
+
 class TelaConsultar(object):
     def setupConsultar(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -127,6 +128,9 @@ class TelaConsultar(object):
         # Botão Atualizar
         self.pushButton_3.clicked.connect(self.tela_atualizar_dados)
 
+        # Botão Gerar Relatório Excel
+        self.pushButton_4.clicked.connect(self.gerar_planilha)
+
     def listar_dados(self):
         table = self.tableWidget
         return ConectionForm().listar(table)
@@ -142,6 +146,10 @@ class TelaConsultar(object):
 
         return selecionar(linha)
 
+    def gerar_planilha(self):
+        import GerarRelatorio
+        GerarRelatorio
+        print("Gerado com Sucesso")
 
 
 if __name__ == "__main__":

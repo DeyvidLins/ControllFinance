@@ -92,9 +92,12 @@ class ConectionForm():
 
         print(self.desc)
         cur.execute(f"UPDATE financa SET desc='{self.desc}' WHERE id = '{self.id}'")
-
-
-
+        cur.execute(f"UPDATE financa SET valor='{self.valor}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE financa SET dataVenc='{self.dataVenc}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE financa SET dataPag='{self.dataPag}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE financa SET valorPag='{self.valorPag}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE financa SET devendo='{self.devendo}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE financa SET status='{self.status}' WHERE id = '{self.id}'")
 
         conn.commit()
 
@@ -109,9 +112,7 @@ def selecionar (linha):
     cur.execute(f"SELECT * FROM financa where id = {id}")
     dado = cur.fetchall()
 
-
     conn.commit()
-
 
     return select(dado)
 
