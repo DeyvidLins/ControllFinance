@@ -132,8 +132,7 @@ class TelaUpdate(object):
         self.label_7.setText(_translate("MainWindow", "Status"))
         self.label_8.setText(_translate("MainWindow", "Devendo"))
 
-
-
+        self.lineEdit.setText(f'{l[0]}')  # Descrição
         self.lineEdit_2.setText(f'{l[1]}') # Descrição
         self.lineEdit_3.setText(f'{l[2]}') # valor
         self.lineEdit_4.setText(f'{l[3]}') # Data Vencimento
@@ -156,8 +155,16 @@ class TelaUpdate(object):
 lista = [] # lista vazia para receber uma lista de tuplas
 def select(dado):
     global lista
-    for i in range(0,8): #Conversão de uma lista de tuplas para lista simples
-        lista.append(dado[0][i])
+    #Conversão de uma lista de tuplas para lista simples
+    id = dado[0][0]
+    desc = dado[0][1]
+    valor = dado[0][2]
+    dataVenc = dado[0][3]
+    dataPag = dado[0][4]
+    valorPag = dado[0][5]
+    devendo = dado[0][6]
+    status = dado[0][7]
+    lista = [id, desc, valor, dataVenc, dataPag, valorPag, devendo, status]
 
     return select_01()
 
@@ -175,8 +182,6 @@ def select_01():
     l = [id,desc,valor, dataVenc, dataPag, valorPag, devendo, status]
 
     return l
-
-
 
 if __name__ == "__main__":
     import sys
