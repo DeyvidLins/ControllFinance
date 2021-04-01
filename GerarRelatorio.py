@@ -1,17 +1,13 @@
 from openpyxl import Workbook # pip install openpyxl
 from openpyxl.styles import Font, Color, colors
-import  ConexaoBD
-import Form
+import ConexaoBD
 
-import pandas as pd
 
 wb = Workbook()
 ws1 = wb.active # work sheet
 ws1.title = "Pyxl"
 
-#Realiza a leitura  do arquvio excel através da biblioteca Pandas
-#x = pd.read_excel(r"C:\Users\Deyvid\Desktop\Repo-GitHub\pythonExcel\ControleFinanceiro.xlsx")
-#print(x)
+
 
 listDesc=[]
 listValor=[]
@@ -30,10 +26,8 @@ ws1["F1"]='Devendo'
 ws1["G1"]='Status'
 
 conection= ConexaoBD.cur
-conectionFireBase = ConexaoBD.bd
 
-
-
+#Laços de interação para pegar as informações do banco e transformar em uma planilha
 for i in conection.execute("select desc from financa; ").fetchall():
     listDesc.append(i[0])
     ws1.cell(column=1, row=len(listDesc) + 1 , value=i[0])
@@ -67,11 +61,6 @@ for i in conection.execute("select status from financa; ").fetchall():
 
 #Inserindo dados no FireBase
 cont = 0
-for i in conection.execute("select * from financa; ").fetchall():
-    conectionFireBase.child("Finance").push({"Descrição": f"{listDesc[cont]}","Valor": f"{listValor[cont]}" , "Data de Vencimento": f"{listData[cont]}",
-                       "Data de Pagamento": f"{listPag[cont]}", "Valor que foi pago": f"{listValorPag[cont]}", "Devendo": f"{listDev[cont]}",
-                        "Status": f"{listStatus[cont]}"})
-    cont += 1
 
 
 ws1["H13"]='TOTAL DE DÍVIDA'

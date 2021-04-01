@@ -1,6 +1,6 @@
 import sqlite3
-import pyrebase
 from PyQt5 import QtCore, QtGui, QtWidgets
+import pyrebase
 
 conn = sqlite3.connect('Financeiro.db')
 cur = conn.cursor()
@@ -41,11 +41,20 @@ class ConectionForm():
         self.devendo = devendo
         self.status = status
 
+        #Insert SqlLite
         cur.execute(f'''INSERT INTO financa (desc,valor,dataVenc,dataPag,valorPag,devendo,status) 
                                                            VALUES ('{self.desc}','{self.valor}','{self.dataVenc}','{self.dataPag}',
                                                            '{self.valorPag}', '{self.devendo}', '{self.status}');''')
 
         conn.commit()
+
+        #Insert Firebase
+        bd.child("Finance").push({"Descrição": f"{self.desc}", "Valor": f"{self.valor}",
+                                                     "Data de Vencimento": f"{self.dataVenc}",
+                                                     "Data de Pagamento": f"{self.dataPag}",
+                                                     "Valor que foi pago": f"{self.valorPag}",
+                                                     "Devendo": f"{self.devendo}",
+                                                     "Status": f"{self.status}"})
 
 
 
