@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ConexaoBD import ConectionForm
 from ConexaoBD import  selecionar
+from  TelaAlertaDelete import recebe_dados_excluir
 
 
 
@@ -122,8 +123,8 @@ class TelaConsultar(object):
         # Botão Listar
         self.pushButton.clicked.connect(self.listar_dados)
 
-        # Botão Excluir
-        self.pushButton_2.clicked.connect(self.excluir_dados)
+        # Botão para abrir a tela de confirmação da exclusão
+        self.pushButton_2.clicked.connect(self.visualizar_alerta_delete)
 
         # Botão Atualizar
         self.pushButton_3.clicked.connect(self.tela_atualizar_dados)
@@ -135,11 +136,11 @@ class TelaConsultar(object):
         table = self.tableWidget
         return ConectionForm().listar(table)
 
-    def excluir_dados(self):
+    def visualizar_alerta_delete(self):
         linha = self.tableWidget.currentRow()
         self.tableWidget.removeRow(linha)
 
-        return ConectionForm().excluir(linha)
+        return recebe_dados_excluir(linha)
 
     def tela_atualizar_dados(self):
         linha = self.tableWidget.currentRow()
