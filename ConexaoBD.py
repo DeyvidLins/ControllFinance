@@ -22,24 +22,15 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 bd = firebase.database()
 
 
-def create_sql(): # Funcao CRIAR
-    cur.execute('''CREATE TABLE financa(id INTEGER PRIMARY KEY AUTOINCREMENT, desc VARCHAR(100) NOT NULL, 
-               valor FLOAT NOT NULL,  dataVenc VARCHAR(15) NOT NULL,  dataPag varchar(15) NOT NULL, valorPag FLOAT NOT NULL,
-               devendo  FLOAT NOT NULL, status varchar(2));''')
-    conn.commit()
-
-
-
-verify = cur.execute("SELECT name FROM sqlite_master where name ='financa' ")
-
-verify = cur.fetchone()
-
-# Se a Tabela não for Criada no banco, executar a função create_sql()
-if verify is None:
-    create_sql()
-
 class ConectionForm():
-    # Função para inserir dados no Sqllite
+    # Função para Criar as tabelas no banco
+    def create_sql(self):
+        cur.execute('''CREATE TABLE financa(id INTEGER PRIMARY KEY AUTOINCREMENT, desc VARCHAR(100) NOT NULL, 
+                   valor FLOAT NOT NULL,  dataVenc VARCHAR(15) NOT NULL,  dataPag varchar(15) NOT NULL, valorPag FLOAT NOT NULL,
+                   devendo  FLOAT NOT NULL, status varchar(2));''')
+        conn.commit()
+
+    # Função para Inserir dados
     def inserir (self,desc = '', valor = '', dataVenc = '', dataPag = '', valorPag = '', devendo = '', status = ''):
 
         self.desc = desc
@@ -55,16 +46,16 @@ class ConectionForm():
                                                            '{self.valorPag}', '{self.devendo}', '{self.status}');''')
 
         conn.commit()
-        conn.close()
 
 
-    # Função para listar dados no Sqllite
-    def banco_dados(self, table):
+
+    # Função para Listar dados
+    def listar(self, table):
 
         # Retorna uma lista do sql
         conn = sqlite3.connect('Financeiro.db')
         cur = conn.cursor()
-        cur.execute("select * from financa")
+        cur.execute("SELECT * FROM financa")
         c = cur.fetchall()
         table.setRowCount(len(c))
         table.setColumnCount(8)
@@ -74,6 +65,66 @@ class ConectionForm():
                 table.setItem(i, j, QtWidgets.QTableWidgetItem(str(c[i][j])))
 
         conn.commit()
-        conn.close()
+
+
+    # Função para Excluir dados
+    def excluir(self, linha):
+        cur.execute("SELECT id FROM financa")
+        c = cur.fetchall()
+        id = c[linha][0]
+        cur.execute(f"delete from financa where id = {id}")
+
+
+        conn.commit()
+
+
+    # Função para Atualizar dados
+    def atualizar(self, id = '', desc = '', valor = '', dataVenc = '', dataPag = '', valorPag = '', devendo = '', status = ''):
+
+        self.id = id
+        self.desc = desc
+        self.valor = valor
+        self.dataVenc = dataVenc
+        self.dataPag = dataPag
+        self.valorPag = valorPag
+        self.devendo = devendo
+        self.status = status
+
+        print(self.desc)
+        cur.execute(f"UPDATE financa SET desc='{self.desc}' WHERE id = '{self.id}'")
+
+
+
+
+        conn.commit()
+
+
+
+# Função para Selecionar dados para que possa atualizar
+def selecionar (linha):
+    from TelaAtualizar import select
+    cur.execute("SELECT id FROM financa")
+    c = cur.fetchall()
+    id = c[linha][0]
+    cur.execute(f"SELECT * FROM financa where id = {id}")
+    dado = cur.fetchall()
+
+
+    conn.commit()
+
+
+    return select(dado)
+
+
+
+
+
+verify = cur.execute("SELECT name FROM sqlite_master WHERE name ='financa' ")
+
+verify = cur.fetchone()
+
+# Se a Tabela não for Criada no banco, executa a função create_sql()
+if verify is None:
+    ConectionForm().create_sql()
 
 

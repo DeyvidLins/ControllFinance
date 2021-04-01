@@ -86,7 +86,7 @@ class TelaInserir(object):
         font.setPointSize(18)
         self.pushButton.setFont(font)
         self.pushButton.setStyleSheet("\n"
-"background-color: rgb(187, 175, 255);")
+"background-color: rgb(0, 255, 127);")
         self.pushButton.setObjectName("pushButton")
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setGeometry(QtCore.QRect(290, 120, 321, 21))
@@ -160,10 +160,10 @@ class TelaInserir(object):
         self.actionAtualizar_comprar_D_vidas.setText(_translate("MainWindow", "Atualizar comprar/Dívidas"))
 
         # Botão Salvar
-        self.pushButton.clicked.connect(self.inserir_banco)
+        self.pushButton.clicked.connect(self.inserir_dados)
 
     # Lançamento dos dados para o banco
-    def inserir_banco(self):
+    def inserir_dados(self):
 
         c = ConectionForm().inserir(self.lineEdit.text(), self.lineEdit_2.text(),self.dateEdit.text(),
                                     self.dateEdit_2.text(),self.lineEdit_5.text(), self.lineEdit_6.text(), self.comboBox.currentText())
