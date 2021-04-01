@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ConexaoBD import ConectionForm
+from ConexaoBD import  selecionar
 
 
 class TelaConsultar(object):
@@ -49,7 +50,7 @@ class TelaConsultar(object):
         self.pushButton.setStyleSheet("background-color: rgb(0, 85, 255);")
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(130, 420, 75, 23))
+        self.pushButton_2.setGeometry(QtCore.QRect(210, 420, 75, 23))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift Light Condensed")
         font.setPointSize(13)
@@ -59,6 +60,27 @@ class TelaConsultar(object):
         self.pushButton_2.setStyleSheet("background-color: rgb(255, 0, 0);\n"
 "")
         self.pushButton_2.setObjectName("pushButton_2")
+        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_3.setGeometry(QtCore.QRect(120, 420, 75, 23))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold Condensed")
+        font.setPointSize(13)
+        font.setBold(True)
+        font.setWeight(75)
+        self.pushButton_3.setFont(font)
+        self.pushButton_3.setStyleSheet("background-color: rgb(0, 255, 127);")
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_4.setGeometry(QtCore.QRect(690, 420, 151, 20))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift Light Condensed")
+        font.setPointSize(13)
+        font.setBold(True)
+        font.setWeight(75)
+        self.pushButton_4.setFont(font)
+        self.pushButton_4.setStyleSheet("background-color: rgb(255, 0, 127);\n"
+"")
+        self.pushButton_4.setObjectName("pushButton_4")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 886, 21))
@@ -93,12 +115,17 @@ class TelaConsultar(object):
         self.label.setText(_translate("MainWindow", "Lista de Compras/Produtos"))
         self.pushButton.setText(_translate("MainWindow", "Listar"))
         self.pushButton_2.setText(_translate("MainWindow", "Excluir"))
+        self.pushButton_3.setText(_translate("MainWindow", "Atualizar"))
+        self.pushButton_4.setText(_translate("MainWindow", "Gerar Planilha Excel"))
 
         # Botão Listar
         self.pushButton.clicked.connect(self.listar_dados)
 
         # Botão Excluir
         self.pushButton_2.clicked.connect(self.excluir_dados)
+
+        # Botão Atualizar
+        self.pushButton_3.clicked.connect(self.tela_atualizar_dados)
 
     def listar_dados(self):
         table = self.tableWidget
@@ -109,6 +136,12 @@ class TelaConsultar(object):
         self.tableWidget.removeRow(linha)
 
         return ConectionForm().excluir(linha)
+
+    def tela_atualizar_dados(self):
+        linha = self.tableWidget.currentRow()
+
+        return selecionar(linha)
+
 
 
 if __name__ == "__main__":

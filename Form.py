@@ -160,10 +160,10 @@ class TelaInserir(object):
         self.actionAtualizar_comprar_D_vidas.setText(_translate("MainWindow", "Atualizar comprar/Dívidas"))
 
         # Botão Salvar
-        self.pushButton.clicked.connect(self.inserir_banco)
+        self.pushButton.clicked.connect(self.inserir_dados)
 
     # Lançamento dos dados para o banco
-    def inserir_banco(self):
+    def inserir_dados(self):
 
         c = ConectionForm().inserir(self.lineEdit.text(), self.lineEdit_2.text(),self.dateEdit.text(),
                                     self.dateEdit_2.text(),self.lineEdit_5.text(), self.lineEdit_6.text(), self.comboBox.currentText())

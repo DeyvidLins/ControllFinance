@@ -8,6 +8,7 @@ from PyQt5.QtPrintSupport import *
 import os, sys
 from Form import TelaInserir
 from Form02 import TelaConsultar
+from TelaAtualizar import  TelaUpdate
 
 #Form.py
 class TelaPincipal(QMainWindow):
@@ -30,6 +31,20 @@ class TelaSecundaria(QMainWindow):
         super(TelaSecundaria,self).__init__(*args, **argvs)
         self.ui = TelaConsultar()
         self.ui.setupConsultar(self)
+        self.ui.pushButton_3.clicked.connect(self.tela_update)
+
+    def tela_update(self):
+        self.tela_up = TelaAtualizar()
+        self.tela_up.show()
+
+
+
+#TelaAtualizar.py
+class TelaAtualizar(QMainWindow):
+    def __init__(self,*args,**argvs):
+        super(TelaAtualizar,self).__init__(*args, **argvs)
+        self.ui = TelaUpdate()
+        self.ui.setupUpdate(self)
 
 
 
