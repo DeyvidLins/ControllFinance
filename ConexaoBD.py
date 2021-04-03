@@ -31,14 +31,16 @@ class ConectionForm():
         conn.commit()
 
     # Função para Inserir dados
-    def inserir (self,desc = '', valor = '', dataVenc = '', dataPag = '', valorPag = '', devendo = '', status = ''):
+    def inserir (self,desc = '', valor = '', dataVenc = '', dataPag = '', valorPag = '', status = ''):
 
+        sub = int(valor) - int(valorPag) # subtração do valor que está devendo
         self.desc = desc
         self.valor = valor
         self.dataVenc = dataVenc
         self.dataPag = dataPag
         self.valorPag = valorPag
-        self.devendo = devendo
+        self.devendo = sub
+        print(self.devendo)
         self.status = status
 
         #Insert SqlLite
