@@ -40,7 +40,6 @@ class ConectionForm():
         self.dataPag = dataPag
         self.valorPag = valorPag
         self.devendo = sub
-        print(self.devendo)
         self.status = status
 
         #Insert SqlLite
@@ -101,7 +100,7 @@ class ConectionForm():
         self.devendo = devendo
         self.status = status
 
-        print(self.desc)
+
         cur.execute(f"UPDATE financa SET desc='{self.desc}' WHERE id = '{self.id}'")
         cur.execute(f"UPDATE financa SET valor='{self.valor}' WHERE id = '{self.id}'")
         cur.execute(f"UPDATE financa SET dataVenc='{self.dataVenc}' WHERE id = '{self.id}'")

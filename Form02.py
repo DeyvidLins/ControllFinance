@@ -1,14 +1,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QFileDialog, QWidget
 from ConexaoBD import ConectionForm
 from ConexaoBD import  selecionar
 from  TelaAlertaDelete import recebe_dados_excluir
 
 
-
 class TelaConsultar(object):
     def setupConsultar(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(886, 499)
+        MainWindow.resize(875, 454)
         MainWindow.setStyleSheet("background-color: rgb(170, 0, 255);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -42,7 +42,7 @@ class TelaConsultar(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(30, 420, 75, 23))
+        self.pushButton.setGeometry(QtCore.QRect(30, 400, 75, 23))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold Condensed")
         font.setPointSize(13)
@@ -52,7 +52,7 @@ class TelaConsultar(object):
         self.pushButton.setStyleSheet("background-color: rgb(0, 85, 255);")
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(210, 420, 75, 23))
+        self.pushButton_2.setGeometry(QtCore.QRect(210, 400, 75, 23))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift Light Condensed")
         font.setPointSize(13)
@@ -60,10 +60,10 @@ class TelaConsultar(object):
         font.setWeight(75)
         self.pushButton_2.setFont(font)
         self.pushButton_2.setStyleSheet("background-color: rgb(255, 0, 0);\n"
-"")
+                                        "")
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QtCore.QRect(120, 420, 75, 23))
+        self.pushButton_3.setGeometry(QtCore.QRect(120, 400, 75, 23))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold Condensed")
         font.setPointSize(13)
@@ -73,7 +73,7 @@ class TelaConsultar(object):
         self.pushButton_3.setStyleSheet("background-color: rgb(0, 255, 127);")
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_4.setGeometry(QtCore.QRect(690, 420, 151, 20))
+        self.pushButton_4.setGeometry(QtCore.QRect(700, 400, 151, 20))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift Light Condensed")
         font.setPointSize(13)
@@ -81,13 +81,27 @@ class TelaConsultar(object):
         font.setWeight(75)
         self.pushButton_4.setFont(font)
         self.pushButton_4.setStyleSheet("background-color: rgb(255, 0, 127);\n"
-"")
+                                        "")
         self.pushButton_4.setObjectName("pushButton_4")
+        self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_5.setGeometry(QtCore.QRect(0, 0, 71, 51))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold Condensed")
+        font.setPointSize(13)
+        font.setBold(True)
+        font.setWeight(75)
+        self.pushButton_5.setFont(font)
+        self.pushButton_5.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+                                        "background-color: rgb(170, 0, 255);\n"
+                                        "")
+        self.pushButton_5.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("C:\\Users\\Deyvid\\Desktop\\ArquivosUI\\seta-esquerda01.png"), QtGui.QIcon.Normal,
+                       QtGui.QIcon.Off)
+        self.pushButton_5.setIcon(icon)
+        self.pushButton_5.setIconSize(QtCore.QSize(64, 64))
+        self.pushButton_5.setObjectName("pushButton_5")
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 886, 21))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
@@ -117,7 +131,7 @@ class TelaConsultar(object):
         self.label.setText(_translate("MainWindow", "Lista de Compras/Produtos"))
         self.pushButton.setText(_translate("MainWindow", "Listar"))
         self.pushButton_2.setText(_translate("MainWindow", "Excluir"))
-        self.pushButton_3.setText(_translate("MainWindow", "Atualizar"))
+        self.pushButton_3.setText(_translate("MainWindow", "Salvar"))
         self.pushButton_4.setText(_translate("MainWindow", "Gerar Planilha Excel"))
 
         # Botão Listar
@@ -130,7 +144,7 @@ class TelaConsultar(object):
         self.pushButton_3.clicked.connect(self.tela_atualizar_dados)
 
         # Botão Gerar Relatório Excel
-        self.pushButton_4.clicked.connect(self.gerar_planilha)
+        self.pushButton_4.clicked.connect(self.open_save)
 
     def listar_dados(self):
         table = self.tableWidget
@@ -147,10 +161,19 @@ class TelaConsultar(object):
 
         return selecionar(linha)
 
-    def gerar_planilha(self):
-        import GerarRelatorio
-        GerarRelatorio
-        print("Gerado com Sucesso")
+    #Escolhe onde será salvo o local do arquivo Excel
+    def open_save(self):
+        from GerarRelatorio import GerarPlanilha
+
+        widget = QWidget()
+        option = QFileDialog.Options()
+        file = QFileDialog.getSaveFileName(widget, "Salve o arquivo em um local", "ControleFinanceiro.xlsx", "All Files(*)", options=option)
+        if file:
+            print(file[0])
+            return GerarPlanilha().gerar_pla(file[0])
+
+
+
 
 
 if __name__ == "__main__":

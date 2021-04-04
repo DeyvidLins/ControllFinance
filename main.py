@@ -15,9 +15,9 @@ from TelaApagar import TelaDelete
 
 
 #Form.py
-class TelaPincipal(QMainWindow):
+class TelaPrincipal(QMainWindow):
     def __init__(self,*args,**argvs):
-        super(TelaPincipal,self).__init__(*args,**argvs)
+        super(TelaPrincipal,self).__init__(*args,**argvs)
         self.ui = TelaInserir()
         self.ui.setupInserir(self)
         self.ui.actionConsultar.triggered.connect(self.tela02)
@@ -27,13 +27,36 @@ class TelaPincipal(QMainWindow):
     def tela02(self):
         self.tela_sec = TelaSecundaria()
         self.tela_sec.show()
-        TelaPincipal.hide(self)
+        TelaPrincipal.hide(self)
 
-    #Mostra na tela que foi salvo
+    #Mostra na tela o que foi salvo
     def visualizar_salvar(self):
         self.tela_sa = TelaSalve()
         self.tela_sa.show()
 
+#Form02.py
+class TelaSecundaria(QMainWindow):
+    def __init__(self,*args,**argvs):
+        super(TelaSecundaria,self).__init__(*args, **argvs)
+        self.ui = TelaConsultar()
+        self.ui.setupConsultar(self)
+        self.ui.pushButton_2.clicked.connect(self.visualizar_aletar_delete)
+        self.ui.pushButton_3.clicked.connect(self.tela_update)
+        self.ui.pushButton_5.clicked.connect(self.chamar_form_inserir)
+
+    def tela_update(self):
+        self.tela_up = TelaAtualizar()
+        self.tela_up.show()
+
+    def visualizar_aletar_delete(self):
+        self.tela_alert_delet = TelaAlertaD()
+        self.tela_alert_delet.show()
+
+    # Retorna para a tela principal que é inserir
+    def chamar_form_inserir(self):
+        self.tela_principal = TelaPrincipal()
+        self.tela_principal.show()
+        TelaSecundaria.hide(self)
 
 
 #TelaSalvar.py
@@ -46,24 +69,6 @@ class TelaSalve(QMainWindow):
 
     def encerrar_tela(self):
         TelaSalve.hide(self)
-
-
-#Form02.py
-class TelaSecundaria(QMainWindow):
-    def __init__(self,*args,**argvs):
-        super(TelaSecundaria,self).__init__(*args, **argvs)
-        self.ui = TelaConsultar()
-        self.ui.setupConsultar(self)
-        self.ui.pushButton_2.clicked.connect(self.visualizar_aletar_delete)
-        self.ui.pushButton_3.clicked.connect(self.tela_update)
-
-    def tela_update(self):
-        self.tela_up = TelaAtualizar()
-        self.tela_up.show()
-
-    def visualizar_aletar_delete(self):
-        self.tela_alert_delet = TelaAlertaD()
-        self.tela_alert_delet.show()
 
 
 #TelaAtualizar.py
@@ -106,6 +111,6 @@ class TelaDelet(QMainWindow):
 
 app = QApplication(sys.argv)
 if(QDialog.Accepted == True):
-    window = TelaPincipal()
+    window = TelaPrincipal()
     window.show()
 sys.exit(app.exec_())
