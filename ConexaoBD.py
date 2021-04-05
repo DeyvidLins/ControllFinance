@@ -26,7 +26,7 @@ class ConectionForm():
     # Função para Criar as tabelas no banco
     def create_sql(self):
         cur.execute('''CREATE TABLE finance(id INTEGER PRIMARY KEY AUTOINCREMENT, desc VARCHAR(100) NOT NULL, 
-                   valor FLOAT NOT NULL,  dataVenc VARCHAR(15) NOT NULL,  dataPag varchar(15) NOT NULL, valorPag FLOAT NOT NULL,
+                   valor FLOAT NOT NULL,  dataVenc date NOT NULL,  dataPag date NOT NULL, valorPag FLOAT NOT NULL,
                    devendo  FLOAT NOT NULL, status varchar(2));''')
         conn.commit()
 
