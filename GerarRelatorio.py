@@ -6,7 +6,7 @@ import ConexaoBD
 
 
 class GerarPlanilha():
-    def gerar_pla(self,dir):
+    def gerar_pla(self,data, dir):
         wb = Workbook()
         ws1 = wb.active # work sheet
         ws1.title = "Pyxl"
@@ -30,33 +30,33 @@ class GerarPlanilha():
         conection= ConexaoBD.cur
 
         #Laços de interação para pegar as informações do banco e transformar em uma planilha
-        for i in conection.execute("select desc from finance; ").fetchall():
+        for i in conection.execute(f"select desc from finance WHERE dataVenc LIKE '%{data}'").fetchall():
             listDesc.append(i[0])
             ws1.cell(column=1, row=len(listDesc) + 1 , value=i[0])
 
 
-        for i in conection.execute("select valor from finance; ").fetchall():
+        for i in conection.execute(f"SELECT valor  FROM finance WHERE dataVenc LIKE '%{data}' ").fetchall():
             listValor.append(i[0])
             ws1.cell(column=2, row=len(listValor) + 1, value=i[0])
 
 
-        for i in conection.execute("select dataVenc from finance; ").fetchall():
+        for i in conection.execute(f"SELECT dataVenc FROM finance WHERE dataVenc LIKE '%{data}' ").fetchall():
             listData.append(i[0])
             ws1.cell(column=3, row=len(listData) + 1, value=i[0])
 
-        for i in conection.execute("select dataPag from finance; ").fetchall():
+        for i in conection.execute(f"SELECT dataPag FROM finance WHERE dataVenc LIKE '%{data}' ").fetchall():
             listPag.append(i[0])
             ws1.cell(column=4, row=len(listPag) + 1, value=i[0])
 
-        for i in conection.execute("select valorPag from finance; ").fetchall():
+        for i in conection.execute(f"SELECT valorPag FROM finance WHERE dataVenc LIKE '%{data}' ").fetchall():
             listValorPag.append(i[0])
             ws1.cell(column=5, row=len(listValorPag) + 1, value=i[0])
 
-        for i in conection.execute("select devendo from finance; ").fetchall():
+        for i in conection.execute(f"select devendo from finance WHERE dataVenc LIKE '%{data}' ").fetchall():
             listDev.append(i[0])
             ws1.cell(column=6, row=len(listDev) + 1, value=i[0])
 
-        for i in conection.execute("select status from finance; ").fetchall():
+        for i in conection.execute(f"select status from finance WHERE dataVenc LIKE '%{data}' ").fetchall():
             listStatus.append(i[0])
             ws1.cell(column=7, row=len(listStatus) + 1, value=i[0])
 

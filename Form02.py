@@ -102,6 +102,27 @@ class TelaConsultar(object):
         self.pushButton_5.setIcon(icon)
         self.pushButton_5.setIconSize(QtCore.QSize(64, 64))
         self.pushButton_5.setObjectName("pushButton_5")
+        self.comboBox = QtWidgets.QComboBox(self.centralwidget)
+        self.comboBox.setGeometry(QtCore.QRect(210, 60, 71, 21))
+        self.comboBox.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(30, 60, 181, 21))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift Light Condensed")
+        font.setPointSize(15)
+        self.label_2.setFont(font)
+        self.label_2.setStyleSheet("background-color: rgb(170, 0, 255);")
+        self.label_2.setObjectName("label_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -132,8 +153,18 @@ class TelaConsultar(object):
         self.label.setText(_translate("MainWindow", "Lista de Compras/Produtos"))
         self.pushButton.setText(_translate("MainWindow", "Listar"))
         self.pushButton_2.setText(_translate("MainWindow", "Excluir"))
-        self.pushButton_3.setText(_translate("MainWindow", "Atualizar"))
+        self.pushButton_3.setText(_translate("MainWindow", "Salvar"))
         self.pushButton_4.setText(_translate("MainWindow", "Gerar Planilha Excel"))
+        self.comboBox.setItemText(0, _translate("MainWindow", "04/2021"))
+        self.comboBox.setItemText(1, _translate("MainWindow", "05/2021"))
+        self.comboBox.setItemText(2, _translate("MainWindow", "06/2021"))
+        self.comboBox.setItemText(3, _translate("MainWindow", "07/2021"))
+        self.comboBox.setItemText(4, _translate("MainWindow", "08/2021"))
+        self.comboBox.setItemText(5, _translate("MainWindow", "09/2021"))
+        self.comboBox.setItemText(6, _translate("MainWindow", "10/2021"))
+        self.comboBox.setItemText(7, _translate("MainWindow", "11/2021"))
+        self.comboBox.setItemText(8, _translate("MainWindow", "12/2021"))
+        self.label_2.setText(_translate("MainWindow", "Mostrar compras da data:"))
 
         # Botão Listar
         self.pushButton.clicked.connect(self.listar_dados)
@@ -147,9 +178,12 @@ class TelaConsultar(object):
         # Botão Gerar Relatório Excel
         self.pushButton_4.clicked.connect(self.open_save)
 
+
+
     def listar_dados(self):
         table = self.tableWidget
-        return ConectionForm().listar(table)
+        data = self.comboBox.currentText()
+        return ConectionForm().listar(data,table)
 
     def visualizar_alerta_delete(self):
         linha = self.tableWidget.currentRow()
@@ -163,6 +197,7 @@ class TelaConsultar(object):
 
     #Escolhe onde será salvo o local do arquivo Excel
     def open_save(self):
+        data = self.comboBox.currentText()
         from GerarRelatorio import GerarPlanilha
 
         widget = QWidget()
@@ -171,7 +206,7 @@ class TelaConsultar(object):
         if file:
             self.tela_relatorio = TelaSalvaRelatorio()
             self.tela_relatorio.show() # mostra o form TelaSalvarRelatorio.py
-            return GerarPlanilha().gerar_pla(file[0])
+            return GerarPlanilha().gerar_pla(data, file[0])
 
 #Classe para chamar o script TelaSalvaRelatorio.py
 class TelaSalvaRelatorio(QMainWindow):

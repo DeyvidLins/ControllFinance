@@ -60,12 +60,12 @@ class ConectionForm():
 
 
     # Função para Listar dados
-    def listar(self, table):
+    def listar(self, data, table):
 
         # Retorna uma lista do sql
         conn = sqlite3.connect('Financeiro.db')
         cur = conn.cursor()
-        cur.execute("SELECT * FROM finance")
+        cur.execute(f"SELECT * FROM finance WHERE dataVenc LIKE '%{data}'")
         c = cur.fetchall()
         table.setRowCount(len(c))
         table.setColumnCount(8)
