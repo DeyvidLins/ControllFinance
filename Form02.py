@@ -3,7 +3,8 @@ from PyQt5.QtWidgets import QFileDialog, QWidget
 from ConexaoBD import ConectionForm
 from ConexaoBD import  selecionar
 from  TelaAlertaDelete import recebe_dados_excluir
-
+from PyQt5.QtWidgets import *
+from TelaSalvarRelatorio import TelaSalvarR
 
 class TelaConsultar(object):
     def setupConsultar(self, MainWindow):
@@ -131,7 +132,7 @@ class TelaConsultar(object):
         self.label.setText(_translate("MainWindow", "Lista de Compras/Produtos"))
         self.pushButton.setText(_translate("MainWindow", "Listar"))
         self.pushButton_2.setText(_translate("MainWindow", "Excluir"))
-        self.pushButton_3.setText(_translate("MainWindow", "Salvar"))
+        self.pushButton_3.setText(_translate("MainWindow", "Atualizar"))
         self.pushButton_4.setText(_translate("MainWindow", "Gerar Planilha Excel"))
 
         # Botão Listar
@@ -152,7 +153,6 @@ class TelaConsultar(object):
 
     def visualizar_alerta_delete(self):
         linha = self.tableWidget.currentRow()
-        self.tableWidget.removeRow(linha)
 
         return recebe_dados_excluir(linha)
 
@@ -169,10 +169,16 @@ class TelaConsultar(object):
         option = QFileDialog.Options()
         file = QFileDialog.getSaveFileName(widget, "Salve o arquivo em um local", "ControleFinanceiro.xlsx", "All Files(*)", options=option)
         if file:
-            print(file[0])
+            self.tela_relatorio = TelaSalvaRelatorio()
+            self.tela_relatorio.show() # mostra o form TelaSalvarRelatorio.py
             return GerarPlanilha().gerar_pla(file[0])
 
-
+#Classe para chamar o script TelaSalvaRelatorio.py
+class TelaSalvaRelatorio(QMainWindow):
+   def __init__(self, *args, **argvs):
+       super(TelaSalvaRelatorio, self).__init__(*args, **argvs)
+       self.ui = TelaSalvarR()
+       self.ui.setupRelatorio(self)
 
 
 

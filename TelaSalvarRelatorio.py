@@ -1,15 +1,15 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class TelaDelete(object):
-    def setupDel(self, MainWindow):
+class TelaSalvarR(object):
+    def setupRelatorio(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(331, 64)
+        MainWindow.resize(427, 77)
         MainWindow.setStyleSheet("background-color: rgb(174, 142, 255);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(-160, 0, 441, 51))
+        self.label.setGeometry(QtCore.QRect(40, 10, 371, 51))
         font = QtGui.QFont()
         font.setFamily("Arial Black")
         font.setPointSize(16)
@@ -17,7 +17,8 @@ class TelaDelete(object):
         font.setItalic(False)
         font.setWeight(75)
         self.label.setFont(font)
-        self.label.setStyleSheet("background-color: rgb(174, 142, 255);")
+        self.label.setStyleSheet("background-color: rgb(174, 142, 255);\n"
+"")
         self.label.setObjectName("label")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -30,14 +31,14 @@ class TelaDelete(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "                                  Dados Excluídos"))
+        self.label.setText(_translate("MainWindow", "Planilha gerada com Sucesso!!!"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = TelaDelete()
-    ui.setupDel(MainWindow)
+    ui = TelaSalvarR()
+    ui.setupRelatorio(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())

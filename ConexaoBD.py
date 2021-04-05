@@ -25,7 +25,7 @@ bd = firebase.database()
 class ConectionForm():
     # Função para Criar as tabelas no banco
     def create_sql(self):
-        cur.execute('''CREATE TABLE financa(id INTEGER PRIMARY KEY AUTOINCREMENT, desc VARCHAR(100) NOT NULL, 
+        cur.execute('''CREATE TABLE finance(id INTEGER PRIMARY KEY AUTOINCREMENT, desc VARCHAR(100) NOT NULL, 
                    valor FLOAT NOT NULL,  dataVenc VARCHAR(15) NOT NULL,  dataPag varchar(15) NOT NULL, valorPag FLOAT NOT NULL,
                    devendo  FLOAT NOT NULL, status varchar(2));''')
         conn.commit()
@@ -43,7 +43,7 @@ class ConectionForm():
         self.status = status
 
         #Insert SqlLite
-        cur.execute(f'''INSERT INTO financa (desc,valor,dataVenc,dataPag,valorPag,devendo,status) 
+        cur.execute(f'''INSERT INTO finance (desc,valor,dataVenc,dataPag,valorPag,devendo,status) 
                                                            VALUES ('{self.desc}','{self.valor}','{self.dataVenc}','{self.dataPag}',
                                                            '{self.valorPag}', '{self.devendo}', '{self.status}');''')
 
@@ -65,7 +65,7 @@ class ConectionForm():
         # Retorna uma lista do sql
         conn = sqlite3.connect('Financeiro.db')
         cur = conn.cursor()
-        cur.execute("SELECT * FROM financa")
+        cur.execute("SELECT * FROM finance")
         c = cur.fetchall()
         table.setRowCount(len(c))
         table.setColumnCount(8)
@@ -79,10 +79,10 @@ class ConectionForm():
 
     # Função para Excluir dados
     def excluir(self, linha):
-        cur.execute("SELECT id FROM financa")
+        cur.execute("SELECT id FROM finance")
         c = cur.fetchall()
         id = c[linha][0]
-        cur.execute(f"delete from financa where id = {id}")
+        cur.execute(f"delete from finance where id = {id}")
 
 
         conn.commit()
@@ -101,13 +101,13 @@ class ConectionForm():
         self.status = status
 
 
-        cur.execute(f"UPDATE financa SET desc='{self.desc}' WHERE id = '{self.id}'")
-        cur.execute(f"UPDATE financa SET valor='{self.valor}' WHERE id = '{self.id}'")
-        cur.execute(f"UPDATE financa SET dataVenc='{self.dataVenc}' WHERE id = '{self.id}'")
-        cur.execute(f"UPDATE financa SET dataPag='{self.dataPag}' WHERE id = '{self.id}'")
-        cur.execute(f"UPDATE financa SET valorPag='{self.valorPag}' WHERE id = '{self.id}'")
-        cur.execute(f"UPDATE financa SET devendo='{self.devendo}' WHERE id = '{self.id}'")
-        cur.execute(f"UPDATE financa SET status='{self.status}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE finance SET desc='{self.desc}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE finance SET valor='{self.valor}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE finance SET dataVenc='{self.dataVenc}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE finance SET dataPag='{self.dataPag}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE finance SET valorPag='{self.valorPag}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE finance SET devendo='{self.devendo}' WHERE id = '{self.id}'")
+        cur.execute(f"UPDATE finance SET status='{self.status}' WHERE id = '{self.id}'")
 
         conn.commit()
 
@@ -116,10 +116,10 @@ class ConectionForm():
 # Função para Selecionar dados para que possa atualizar
 def selecionar (linha):
     from TelaAtualizar import select
-    cur.execute("SELECT id FROM financa")
+    cur.execute("SELECT id FROM finance")
     c = cur.fetchall()
     id = c[linha][0]
-    cur.execute(f"SELECT * FROM financa where id = {id}")
+    cur.execute(f"SELECT * FROM finance where id = {id}")
     dado = cur.fetchall()
 
     conn.commit()
@@ -130,7 +130,7 @@ def selecionar (linha):
 
 
 
-verify = cur.execute("SELECT name FROM sqlite_master WHERE name ='financa' ")
+verify = cur.execute("SELECT name FROM sqlite_master WHERE name ='finance' ")
 
 verify = cur.fetchone()
 
