@@ -199,7 +199,6 @@ class TelaConsultar(object):
     def open_save(self):
         data = self.comboBox.currentText()
         d = data.replace("/", '-')
-        print(d)
         from GerarRelatorio import GerarPlanilha
 
         widget = QWidget()
