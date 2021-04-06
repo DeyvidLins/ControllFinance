@@ -198,11 +198,13 @@ class TelaConsultar(object):
     #Escolhe onde será salvo o local do arquivo Excel
     def open_save(self):
         data = self.comboBox.currentText()
+        d = data.replace("/", '-')
+        print(d)
         from GerarRelatorio import GerarPlanilha
 
         widget = QWidget()
         option = QFileDialog.Options()
-        file = QFileDialog.getSaveFileName(widget, "Salve o arquivo em um local", "ControleFinanceiro.xlsx", "All Files(*)", options=option)
+        file = QFileDialog.getSaveFileName(widget, "Salve o arquivo em um local", f"ControleFinanceiro-{d}.xlsx", "All Files(*)", options=option)
         if file:
             self.tela_relatorio = TelaSalvaRelatorio()
             self.tela_relatorio.show() # mostra o form TelaSalvarRelatorio.py
