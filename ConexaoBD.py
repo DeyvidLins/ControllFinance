@@ -70,6 +70,8 @@ class ConectionForm():
         table.setRowCount(len(c))
         table.setColumnCount(8)
 
+        finance = bd.child("Finance").get()
+        print(finance.val())
         for i in range(0, len(c)):
             for j in range(0, 8):
                 table.setItem(i, j, QtWidgets.QTableWidgetItem(str(c[i][j])))
@@ -78,9 +80,10 @@ class ConectionForm():
 
 
     # Função para Excluir dados
-    def excluir(self, linha):
-        cur.execute("SELECT id FROM finance")
+    def excluir(self, data, linha):
+        cur.execute(f"SELECT id FROM finance WHERE dataVenc like '%{data}' ")
         c = cur.fetchall()
+        print(c)
         id = c[linha][0]
         cur.execute(f"delete from finance where id = {id}")
 
@@ -114,9 +117,9 @@ class ConectionForm():
 
 
 # Função para Selecionar dados para que possa atualizar
-def selecionar (linha):
+def selecionar (data, linha):
     from TelaAtualizar import select
-    cur.execute("SELECT id FROM finance")
+    cur.execute(f"SELECT id FROM finance WHERE dataVenc like '%{data}' ")
     c = cur.fetchall()
     id = c[linha][0]
     cur.execute(f"SELECT * FROM finance where id = {id}")

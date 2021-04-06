@@ -153,7 +153,7 @@ class TelaConsultar(object):
         self.label.setText(_translate("MainWindow", "Lista de Compras/Produtos"))
         self.pushButton.setText(_translate("MainWindow", "Listar"))
         self.pushButton_2.setText(_translate("MainWindow", "Excluir"))
-        self.pushButton_3.setText(_translate("MainWindow", "Salvar"))
+        self.pushButton_3.setText(_translate("MainWindow", "Atualizar"))
         self.pushButton_4.setText(_translate("MainWindow", "Gerar Planilha Excel"))
         self.comboBox.setItemText(0, _translate("MainWindow", "04/2021"))
         self.comboBox.setItemText(1, _translate("MainWindow", "05/2021"))
@@ -187,18 +187,18 @@ class TelaConsultar(object):
 
     def visualizar_alerta_delete(self):
         linha = self.tableWidget.currentRow()
-
-        return recebe_dados_excluir(linha)
+        data = self.comboBox.currentText()
+        return recebe_dados_excluir(data,linha)
 
     def tela_atualizar_dados(self):
         linha = self.tableWidget.currentRow()
-
-        return selecionar(linha)
+        data = self.comboBox.currentText()
+        return selecionar(data,linha)
 
     #Escolhe onde será salvo o local do arquivo Excel
     def open_save(self):
         data = self.comboBox.currentText()
-        d = data.replace("/", '-')
+        d = data.replace("/", '-') #Muda a data de: / para: -
         from GerarRelatorio import GerarPlanilha
 
         widget = QWidget()

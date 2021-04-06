@@ -68,14 +68,19 @@ class TelaAlertaDel(object):
 
 
     def excluir_dados(self):
-
-        return ConectionForm().excluir(n)
+        return ConectionForm().excluir(data,n)
 
 
 n = 5 # Pode ser um valor qualquer
-def recebe_dados_excluir(linha):
+data = '03/2021'
+def recebe_dados_excluir(d,linha):
     global n
+    global data
+    data = d
     n = linha
+
+
+
 
 
 

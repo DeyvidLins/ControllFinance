@@ -155,6 +155,7 @@ class TelaUpdate(object):
 lista = [] # lista vazia para receber uma lista de tuplas
 def select(dado):
     global lista
+
     #Conversão de uma lista de tuplas para lista simples
     id = dado[0][0]
     desc = dado[0][1]
@@ -171,6 +172,7 @@ def select(dado):
 l = ['']
 def select_01():
     global l # Variável global. Em vez de ser uma lista vazia, será uma lista com os valores abaixo
+
     id  = lista[0]
     desc = lista[1]
     valor = lista[2]
