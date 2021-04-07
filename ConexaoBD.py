@@ -49,13 +49,21 @@ class ConectionForm():
 
         conn.commit()
 
+        # Este select é para pegar o Id do Banco Local(SqlLite) e enviar para o FireBase
+        id = cur.execute(
+            f'''SELECT id FROM finance WHERE desc = "{self.desc}" AND valor = {self.valor} AND dataVenc = "{self.dataVenc}"  
+                                AND dataPAg= "{self.dataPag}" AND valorPag ={self.valorPag} and devendo = {self.devendo} AND status="{self.status}" ''').fetchall()
+
+
+        conn.commit()
+
         #Insert Firebase
-        bd.child("Finance").push({"Descrição": f"{self.desc}", "Valor": f"{self.valor}",
-                                                     "Data de Vencimento": f"{self.dataVenc}",
-                                                     "Data de Pagamento": f"{self.dataPag}",
-                                                     "Valor que foi pago": f"{self.valorPag}",
-                                                     "Devendo": f"{self.devendo}",
-                                                     "Status": f"{self.status}"})
+        bd.child("Finance").push({"id":f"{id[0][0]}","descricao": f"{self.desc}", "valor": f"{self.valor}",
+                                                     "dataVencimento": f"{self.dataVenc}",
+                                                     "dataPagamento": f"{self.dataPag}",
+                                                     "valorPago": f"{self.valorPag}",
+                                                     "devendo": f"{self.devendo}",
+                                                     "status": f"{self.status}"})
 
 
 
@@ -70,8 +78,7 @@ class ConectionForm():
         table.setRowCount(len(c))
         table.setColumnCount(8)
 
-        finance = bd.child("Finance").get()
-        print(finance.val())
+
         for i in range(0, len(c)):
             for j in range(0, 8):
                 table.setItem(i, j, QtWidgets.QTableWidgetItem(str(c[i][j])))
@@ -114,6 +121,19 @@ class ConectionForm():
 
         conn.commit()
 
+        finance = bd.child("Finance").order_by_child("id").equal_to(f"{self.id}").get()
+        for f in finance.each():
+            fi = f.key()
+            print(fi)
+
+            bd.child("Finance").child(f"{fi}").update({"descricao": f"{self.desc}"})
+            bd.child("Finance").child(f"{fi}").update({"valor": f"{self.valor}"})
+            bd.child("Finance").child(f"{fi}").update({"dataVencimento": f"{self.dataVenc}"})
+            bd.child("Finance").child(f"{fi}").update({"dataPagamento": f"{self.dataPag}"})
+            bd.child("Finance").child(f"{fi}").update({"valorPago": f"{self.valorPag}"})
+            bd.child("Finance").child(f"{fi}").update({"devendo": f"{self.devendo}"})
+            bd.child("Finance").child(f"{fi}").update({"status": f"{self.status}"})
+
 
 
 # Função para Selecionar dados para que possa atualizar
@@ -140,5 +160,3 @@ verify = cur.fetchone()
 # Se a Tabela não for Criada no banco, executa a função create_sql()
 if verify is None:
     ConectionForm().create_sql()
-
-
