@@ -33,6 +33,9 @@ class ConectionForm():
     # Função para Inserir dados
     def inserir (self,desc = '', valor = '', dataVenc = '', dataPag = '', valorPag = '', status = ''):
 
+        if valorPag == '':
+            valorPag = 0
+
         sub = int(valor) - int(valorPag) # subtração do valor que está devendo
         self.desc = desc
         self.valor = valor
@@ -46,15 +49,12 @@ class ConectionForm():
         cur.execute(f'''INSERT INTO finance (desc,valor,dataVenc,dataPag,valorPag,devendo,status) 
                                                            VALUES ('{self.desc}','{self.valor}','{self.dataVenc}','{self.dataPag}',
                                                            '{self.valorPag}', '{self.devendo}', '{self.status}');''')
-
         conn.commit()
 
         # Este select é para pegar o Id do Banco Local(SqlLite) e enviar para o FireBase
         id = cur.execute(
             f'''SELECT id FROM finance WHERE desc = "{self.desc}" AND valor = {self.valor} AND dataVenc = "{self.dataVenc}"  
                                 AND dataPAg= "{self.dataPag}" AND valorPag ={self.valorPag} and devendo = {self.devendo} AND status="{self.status}" ''').fetchall()
-
-
         conn.commit()
 
         #Insert Firebase
@@ -90,13 +90,15 @@ class ConectionForm():
     def excluir(self, data, linha):
         cur.execute(f"SELECT id FROM finance WHERE dataVenc like '%{data}' ")
         c = cur.fetchall()
-        print(c)
         id = c[linha][0]
         cur.execute(f"delete from finance where id = {id}")
-
-
         conn.commit()
 
+        #FireBase Delete
+        finance = bd.child("Finance").order_by_child("id").equal_to(f"{id}").get()
+        for f in finance.each():
+            fi = f.key()
+            bd.child("Finance").child(f"{fi}").remove()
 
     # Função para Atualizar dados
     def atualizar(self, id = '', desc = '', valor = '', dataVenc = '', dataPag = '', valorPag = '', devendo = '', status = ''):
@@ -118,13 +120,12 @@ class ConectionForm():
         cur.execute(f"UPDATE finance SET valorPag='{self.valorPag}' WHERE id = '{self.id}'")
         cur.execute(f"UPDATE finance SET devendo='{self.devendo}' WHERE id = '{self.id}'")
         cur.execute(f"UPDATE finance SET status='{self.status}' WHERE id = '{self.id}'")
-
         conn.commit()
 
+        #FireBase update
         finance = bd.child("Finance").order_by_child("id").equal_to(f"{self.id}").get()
         for f in finance.each():
             fi = f.key()
-            print(fi)
 
             bd.child("Finance").child(f"{fi}").update({"descricao": f"{self.desc}"})
             bd.child("Finance").child(f"{fi}").update({"valor": f"{self.valor}"})
@@ -144,14 +145,13 @@ def selecionar (data, linha):
     id = c[linha][0]
     cur.execute(f"SELECT * FROM finance where id = {id}")
     dado = cur.fetchall()
-
     conn.commit()
 
     return select(dado)
 
 
 
-
+#--------------------------------------------------------------------------------------------------------------------
 
 verify = cur.execute("SELECT name FROM sqlite_master WHERE name ='finance' ")
 
