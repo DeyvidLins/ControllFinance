@@ -97,11 +97,6 @@ class TelaInserir(object):
         self.dateEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.dateEdit.setDate(QtCore.QDate(2021, 4, 1))
         self.dateEdit.setObjectName("dateEdit")
-        self.dateEdit_2 = QtWidgets.QDateEdit(self.centralwidget)
-        self.dateEdit_2.setGeometry(QtCore.QRect(200, 240, 110, 22))
-        self.dateEdit_2.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.dateEdit_2.setDate(QtCore.QDate(2021, 4, 1))
-        self.dateEdit_2.setObjectName("dateEdit_2")
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox.setGeometry(QtCore.QRect(230, 330, 69, 22))
         self.comboBox.setStyleSheet("background-color: rgb(255, 255, 255);")
@@ -110,6 +105,10 @@ class TelaInserir(object):
         self.comboBox.setItemText(0, "")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
+        self.lineEdit_3 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_3.setGeometry(QtCore.QRect(200, 240, 113, 20))
+        self.lineEdit_3.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.lineEdit_3.setObjectName("lineEdit_3")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -146,6 +145,7 @@ class TelaInserir(object):
         self.menuConsultar_Compras_D_vidas.setTitle(_translate("MainWindow", " Compras/Dívidas"))
         self.actionConsultar.setText(_translate("MainWindow", "Consultar"))
         self.actionAtualizar_comprar_D_vidas.setText(_translate("MainWindow", "Atualizar comprar/Dívidas"))
+
         # Botão Salvar
         self.pushButton.clicked.connect(self.inserir_dados)
 
@@ -153,7 +153,7 @@ class TelaInserir(object):
     def inserir_dados(self):
 
         c = ConectionForm().inserir(self.lineEdit.text(), self.lineEdit_2.text(),self.dateEdit.text(),
-                                    self.dateEdit_2.text(),self.lineEdit_5.text(), self.comboBox.currentText())
+                                    self.lineEdit_3.text(),self.lineEdit_5.text(), self.comboBox.currentText())
 
         return  c
 

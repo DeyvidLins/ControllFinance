@@ -36,6 +36,9 @@ class ConectionForm():
         if valorPag == '':
             valorPag = 0
 
+        if dataPag == '':
+            dataPag = 0
+            print(dataPag)
         sub = int(valor) - int(valorPag) # subtração do valor que está devendo
         self.desc = desc
         self.valor = valor
