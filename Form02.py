@@ -97,8 +97,9 @@ class TelaConsultar(object):
                                         "")
         self.pushButton_5.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("C:\\Users\\Deyvid\\Desktop\\ArquivosUI\\seta-esquerda01.png"), QtGui.QIcon.Normal,
-                       QtGui.QIcon.Off)
+        icon.addPixmap(
+            QtGui.QPixmap("C:\\Users\\Deyvid\\Desktop\\ArquivosUI\\../Repo-GitHub/ControllFinance/seta-esquerda01.png"),
+            QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_5.setIcon(icon)
         self.pushButton_5.setIconSize(QtCore.QSize(64, 64))
         self.pushButton_5.setObjectName("pushButton_5")
@@ -153,7 +154,7 @@ class TelaConsultar(object):
         self.label.setText(_translate("MainWindow", "Lista de Compras/Produtos"))
         self.pushButton.setText(_translate("MainWindow", "Listar"))
         self.pushButton_2.setText(_translate("MainWindow", "Excluir"))
-        self.pushButton_3.setText(_translate("MainWindow", "Atualizar"))
+        self.pushButton_3.setText(_translate("MainWindow", "Salvar"))
         self.pushButton_4.setText(_translate("MainWindow", "Gerar Planilha Excel"))
         self.comboBox.setItemText(0, _translate("MainWindow", "04/2021"))
         self.comboBox.setItemText(1, _translate("MainWindow", "05/2021"))

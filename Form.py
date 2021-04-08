@@ -109,6 +109,12 @@ class TelaInserir(object):
         self.lineEdit_3.setGeometry(QtCore.QRect(200, 240, 113, 20))
         self.lineEdit_3.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.lineEdit_3.setObjectName("lineEdit_3")
+        self.label_7 = QtWidgets.QLabel(self.centralwidget)
+        self.label_7.setGeometry(QtCore.QRect(90, 10, 91, 71))
+        self.label_7.setText("")
+        self.label_7.setPixmap(
+            QtGui.QPixmap("C:\\Users\\Deyvid\\Desktop\\ArquivosUI\\../Repo-GitHub/ControllFinance/finance.png"))
+        self.label_7.setObjectName("label_7")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
