@@ -33,19 +33,25 @@ class ConectionForm():
     # Função para Inserir dados
     def inserir (self,desc = '', valor = '', dataVenc = '', dataPag = '', valorPag = '', status = ''):
 
+        v = valor.replace(',' , '.') #Caso o usuário insira  vírgula substitui por ponto
+
+        vPag = valorPag.replace(',', '.')#Caso o usuário insira  vírgula substitui por ponto
+
         if valorPag == '':
-            valorPag = 0
+            vPag = 0.00
 
         if dataPag == '':
             dataPag = 0
-            print(dataPag)
-        sub = int(valor) - int(valorPag) # subtração do valor que está devendo
+
+
+        sub = float(v) - float(vPag) # subtração do valor que está devendo
+        dev = round(sub,2) # Arredonda o valor com apenas duas casas decimais
         self.desc = desc
-        self.valor = valor
+        self.valor = v
         self.dataVenc = dataVenc
         self.dataPag = dataPag
-        self.valorPag = valorPag
-        self.devendo = sub
+        self.valorPag = vPag
+        self.devendo = dev
         self.status = status
 
         #Insert SqlLite
@@ -55,9 +61,8 @@ class ConectionForm():
         conn.commit()
 
         # Este select é para pegar o Id do Banco Local(SqlLite) e enviar para o FireBase
-        id = cur.execute(
-            f'''SELECT id FROM finance WHERE desc = "{self.desc}" AND valor = {self.valor} AND dataVenc = "{self.dataVenc}"  
-                                AND dataPAg= "{self.dataPag}" AND valorPag ={self.valorPag} and devendo = {self.devendo} AND status="{self.status}" ''').fetchall()
+        id = cur.execute(f'''SELECT id FROM finance WHERE desc = "{self.desc}" AND valor = {self.valor} AND dataVenc = "{self.dataVenc}"  AND
+                         dataPAg= "{self.dataPag}" AND valorPag ={self.valorPag} AND devendo = {self.devendo} AND status="{self.status}" ''').fetchall()
         conn.commit()
 
         #Insert Firebase
