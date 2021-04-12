@@ -124,6 +124,12 @@ class TelaConsultar(object):
         self.label_2.setFont(font)
         self.label_2.setStyleSheet("background-color: rgb(170, 0, 255);")
         self.label_2.setObjectName("label_2")
+        self.label_7 = QtWidgets.QLabel(self.centralwidget)
+        self.label_7.setGeometry(QtCore.QRect(570, 10, 91, 71))
+        self.label_7.setText("")
+        self.label_7.setPixmap(
+            QtGui.QPixmap("C:\\Users\\Deyvid\\Desktop\\ArquivosUI\\../Repo-GitHub/ControllFinance/finance.png"))
+        self.label_7.setObjectName("label_7")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
