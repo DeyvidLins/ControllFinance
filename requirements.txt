@@ -39,17 +39,3 @@ pymssql==2.2.0
 pyparsing==2.4.7
 pytest==6.2.3
 pytest-cov==2.11.1
-python-dateutil==2.8.1
-python-dotenv==0.15.0
-python-jwt== 3.3.0
-pytz==2021.1
-pyuic5-tool==0.0.1
-requests==2.11.1
-requests-toolbelt==0.7.0
-rsa==4.7.2
-self==2020.12.3
-setuptools==54.2.0
-six==1.15.0
-tk-tools==0.13.0
-toml==0.10.2
-urllib3==1.26.4
