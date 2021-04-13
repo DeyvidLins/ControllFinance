@@ -37,16 +37,6 @@ pycryptodome==3.10.1
 pycryptodomex==3.10.1
 pymssql==2.2.0
 pyparsing==2.4.7
-pyqt5==5.14.0
-pyqt5-plugins==5.15.4.2.1.0
-
-PyQt5-Qt==5.15.2
-PyQt5-Qt5==5.15.2
-PyQt5-sip==12.8.1
-PyQt5-stubs==5.15.2.0
-pyqt5-tools==5.15.2.3.0.2
-PyQt5Designer==5.14.1
-pyrebase5==5.0.1
 pytest==6.2.3
 pytest-cov==2.11.1
 python-dateutil==2.8.1
