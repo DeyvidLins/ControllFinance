@@ -4,10 +4,10 @@ node('master') {
 
     }
     stage("Instalação das Bibliotecas Python"){
-        sh 'pip install -r requirements.txt'
+        sh 'pip3 install -r requirements.txt'
     }
     stage("Classes de Teste") {
-        sh 'pytest -vv --cov -W ignore::DeprecationWarning'
+        sh 'python3 pytest -vv --cov -W ignore::DeprecationWarning'
     }
 
     
