@@ -37,7 +37,7 @@ pycryptodome==3.10.1
 pycryptodomex==3.10.1
 pymssql==2.2.0
 pyparsing==2.4.7
-PyQt5
+pyqt5==5.14.0
 pyqt5-plugins==5.15.2.2.1.0
 PyQt5-Qt==5.15.2
 PyQt5-Qt5==5.15.2
