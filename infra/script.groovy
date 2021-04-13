@@ -6,7 +6,7 @@ node('master') {
     }
     
     stage("Classes de Teste") {
-        sh 'python3 pytest -W ignore::DeprecationWarning'
+        sh 'pytest -W ignore::DeprecationWarning'
     }
 
     
