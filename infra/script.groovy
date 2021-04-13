@@ -1,13 +1,12 @@
 node('master') {
-    stage("Clonando Repositório") {
+    stage("Limpeza de Cache e Clonando Repositório") {
+        cleanWs()
         checkout scm
 
     }
-    stage("Instalação das Bibliotecas Python"){
-        sh 'pip3 install -r requirements.txt'
-    }
+    
     stage("Classes de Teste") {
-        sh 'python3 pytest -vv --cov -W ignore::DeprecationWarning'
+        sh 'python3 pytest -W ignore::DeprecationWarning'
     }
 
     
