@@ -158,10 +158,41 @@ class TelaInserir(object):
     # Lançamento dos dados para o banco
     def inserir_dados(self):
 
-        c = ConectionForm().inserir(self.lineEdit.text(), self.lineEdit_2.text(),self.dateEdit.text(),
-                                    self.lineEdit_3.text(),self.lineEdit_5.text(), self.comboBox.currentText())
+        desc = self.lineEdit.text()
+        valor = self.lineEdit_2.text()
+        dataVenc = self.dateEdit.text()
+        dataPag = self.lineEdit_3.text()
+        valorPag = self.lineEdit_5.text()
+        status = self.comboBox.currentText()
+        c = ConectionForm().inserir(desc,valor,dataVenc,dataPag,valorPag,status)
 
         return  c
+
+
+    def test_inserir(self, listaDados):
+
+        if listaDados[4] == '':
+            listaDados[4] = 0.00
+
+        if listaDados[3] == '':
+            listaDados[3] = 0
+
+
+
+        desc = listaDados[0]
+        valor = float(listaDados[1])
+        dataVenc = listaDados[2]
+        dataPag = listaDados[3]
+        valorPag = float(listaDados[4])
+        sub = valor - valorPag  # subtração do valor que está devendo
+        dev = round(sub, 2)
+        status = listaDados[5]
+
+        co = (desc, valor, dataVenc, dataPag, valorPag, dev, status)
+        print(co)
+
+        return co
+
 
 
 if __name__ == "__main__":

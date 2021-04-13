@@ -1,6 +1,7 @@
 import sqlite3
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pyrebase
+import re
 
 conn = sqlite3.connect('Financeiro.db')
 cur = conn.cursor()
@@ -33,9 +34,17 @@ class ConectionForm():
     # Função para Inserir dados
     def inserir (self,desc = '', valor = '', dataVenc = '', dataPag = '', valorPag = '', status = ''):
 
-        v = valor.replace(',' , '.') #Caso o usuário insira  vírgula substitui por ponto
+        if re.search('\\,\\b', valor, re.IGNORECASE): #Serve para fazer um procura de uma determinada letra na String(Neste caso à vírgula)
+            v = valor.replace(',', '.')
+        else:
+            v = valor
 
-        vPag = valorPag.replace(',', '.')#Caso o usuário insira  vírgula substitui por ponto
+        if re.search('\\,\\b', valorPag, re.IGNORECASE):
+            vPag = valorPag.replace(',', '.')#Caso o usuário insira  vírgula substitui por ponto
+
+        else:
+            vPag = valorPag
+
 
         if valorPag == '':
             vPag = 0.00
@@ -47,10 +56,10 @@ class ConectionForm():
         sub = float(v) - float(vPag) # subtração do valor que está devendo
         dev = round(sub,2) # Arredonda o valor com apenas duas casas decimais
         self.desc = desc
-        self.valor = v
+        self.valor = float(v)
         self.dataVenc = dataVenc
         self.dataPag = dataPag
-        self.valorPag = vPag
+        self.valorPag = float(vPag)
         self.devendo = dev
         self.status = status
 
