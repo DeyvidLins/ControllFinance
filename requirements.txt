@@ -53,5 +53,3 @@ six==1.15.0
 tk-tools==0.13.0
 toml==0.10.2
 urllib3==1.26.4
-virtualenv==20.4.3
-wheel==0.36.2
