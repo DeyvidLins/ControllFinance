@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QWidget
-from ConexaoBD import ConectionForm
+from ConexaoBD import Finance
 from ConexaoBD import  selecionar
 from  TelaAlertaDelete import recebe_dados_excluir
 from PyQt5.QtWidgets import *
@@ -190,7 +190,7 @@ class TelaConsultar(object):
     def listar_dados(self):
         table = self.tableWidget
         data = self.comboBox.currentText()
-        return ConectionForm().listar(data,table)
+        return Finance().listar(data, table)
 
     def visualizar_alerta_delete(self):
         linha = self.tableWidget.currentRow()

@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from ConexaoBD import ConectionForm
+from ConexaoBD import Finance
 
 
 class TelaAlertaDel(object):
@@ -68,7 +68,7 @@ class TelaAlertaDel(object):
 
 
     def excluir_dados(self):
-        return ConectionForm().excluir(data,n)
+        return Finance().excluir(data, n)
 
 
 n = 5 # Pode ser um valor qualquer

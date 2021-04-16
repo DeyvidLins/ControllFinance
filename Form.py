@@ -1,11 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from ConexaoBD import ConectionForm
+from ConexaoBD import Finance
 
 
 class TelaInserir(object):
     def setupInserir(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(636, 494)
+        MainWindow.resize(649, 540)
         MainWindow.setStyleSheet("background-color: rgb(174, 142, 255);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -71,7 +71,7 @@ class TelaInserir(object):
         self.label_8.setFont(font)
         self.label_8.setObjectName("label_8")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(260, 410, 81, 31))
+        self.pushButton.setGeometry(QtCore.QRect(270, 450, 81, 31))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift Light Condensed")
         font.setPointSize(18)
@@ -115,12 +115,31 @@ class TelaInserir(object):
         self.label_7.setPixmap(
             QtGui.QPixmap("C:\\Users\\Deyvid\\Desktop\\ArquivosUI\\../Repo-GitHub/ControllFinance/finance.png"))
         self.label_7.setObjectName("label_7")
+        self.label_9 = QtWidgets.QLabel(self.centralwidget)
+        self.label_9.setGeometry(QtCore.QRect(30, 380, 201, 21))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(15)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_9.setFont(font)
+        self.label_9.setObjectName("label_9")
+        self.label_10 = QtWidgets.QLabel(self.centralwidget)
+        self.label_10.setGeometry(QtCore.QRect(220, 380, 201, 21))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(15)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_10.setFont(font)
+        self.label_10.setText("")
+        self.label_10.setObjectName("label_10")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 636, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 649, 21))
         self.menubar.setObjectName("menubar")
         self.menuConsultar_Compras_D_vidas = QtWidgets.QMenu(self.menubar)
         self.menuConsultar_Compras_D_vidas.setObjectName("menuConsultar_Compras_D_vidas")
@@ -148,6 +167,7 @@ class TelaInserir(object):
         self.pushButton.setText(_translate("MainWindow", "Salvar"))
         self.comboBox.setItemText(1, _translate("MainWindow", "Sim"))
         self.comboBox.setItemText(2, _translate("MainWindow", "Não"))
+        self.label_9.setText(_translate("MainWindow", "Pessoa Responsável:"))
         self.menuConsultar_Compras_D_vidas.setTitle(_translate("MainWindow", " Compras/Dívidas"))
         self.actionConsultar.setText(_translate("MainWindow", "Consultar"))
         self.actionAtualizar_comprar_D_vidas.setText(_translate("MainWindow", "Atualizar comprar/Dívidas"))
@@ -164,11 +184,12 @@ class TelaInserir(object):
         dataPag = self.lineEdit_3.text()
         valorPag = self.lineEdit_5.text()
         status = self.comboBox.currentText()
-        c = ConectionForm().inserir(desc,valor,dataVenc,dataPag,valorPag,status)
+        ins = Finance().inserir(desc, valor, dataVenc, dataPag, valorPag, status)
 
-        return  c
+        return  ins
 
 
+    # Serve somente para Teste
     def test_inserir(self, listaDados):
 
         if listaDados[4] == '':
@@ -176,8 +197,6 @@ class TelaInserir(object):
 
         if listaDados[3] == '':
             listaDados[3] = 0
-
-
 
         desc = listaDados[0]
         valor = float(listaDados[1])

@@ -23,12 +23,12 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 bd = firebase.database()
 
 
-class ConectionForm():
+class Finance():
     # Função para Criar as tabelas no banco
     def create_sql(self):
         cur.execute('''CREATE TABLE finance(id INTEGER PRIMARY KEY AUTOINCREMENT, desc VARCHAR(100) NOT NULL, 
                    valor FLOAT NOT NULL,  dataVenc date NOT NULL,  dataPag date NOT NULL, valorPag FLOAT NOT NULL,
-                   devendo  FLOAT NOT NULL, status varchar(2));''')
+                   devendo  FLOAT NOT NULL, status varchar(2), cpf varchar(15) NOT NULL, FOREIGN KEY (cpf) REFERENCES users(cpf));''')
         conn.commit()
 
     # Função para Inserir dados
@@ -82,8 +82,6 @@ class ConectionForm():
                                                      "devendo": f"{self.devendo}",
                                                      "status": f"{self.status}"})
 
-
-
     # Função para Listar dados
     def listar(self, data, table):
 
@@ -101,7 +99,6 @@ class ConectionForm():
                 table.setItem(i, j, QtWidgets.QTableWidgetItem(str(c[i][j])))
 
         conn.commit()
-
 
     # Função para Excluir dados
     def excluir(self, data, linha):
@@ -152,8 +149,6 @@ class ConectionForm():
             bd.child("Finance").child(f"{fi}").update({"devendo": f"{self.devendo}"})
             bd.child("Finance").child(f"{fi}").update({"status": f"{self.status}"})
 
-
-
 # Função para Selecionar dados para que possa atualizar
 def selecionar (data, linha):
     from TelaAtualizar import select
@@ -166,14 +161,51 @@ def selecionar (data, linha):
 
     return select(dado)
 
+class User():
+    def create_sql(self):
+        cur.execute('''CREATE TABLE users (cpf varchar(15) PRIMARY KEY NOT NULL, nome VARCHAR(100) NOT NULL, email VARCHAR(100) NOT NULL,
+                        sexo char(1) NOT NULL, dataNasc DATE NOT NULL, senha VARCHAR(10) NOT NULL);''')
+
+        conn.commit()
+
+    def inserir(self, cpf='', nome='', email='', sexo='', dataNasc='', senha=''):
+
+        self.cpf = cpf
+        self.nome =  nome
+        self.email = email
+        self.sexo = sexo
+        self.dataNasc = dataNasc
+        self.senha = senha
 
 
-#--------------------------------------------------------------------------------------------------------------------
+        # Insert SqlLite
+        cur.execute(f'''INSERT INTO users (cpf,nome,email,sexo,dataNasc,senha) 
+                        VALUES ('{self.cpf}','{self.nome}','{self.email}','{self.sexo}',
+                        '{self.dataNasc}', '{self.senha}');''')
+        conn.commit()
+
+        # Este select é para pegar o Id do Banco Local(SqlLite) e enviar para o FireBase
+        cpf = cur.execute(f'''SELECT cpf FROM users WHERE cpf= "{self.cpf}" AND nome= "{self.nome}" AND email= "{self.email}"  AND
+                                 sexo= "{self.sexo}" AND dataNasc="{self.dataNasc}" AND senha= "{self.senha}" ''').fetchall()
+        conn.commit()
+
+        # Insert Firebase
+        bd.child("Users").push({"cpf": f"{cpf[0][0]}", "nome": f"{self.nome}", "email": f"{self.email}","sexo": f"{self.sexo}",
+                                  "dataNasc": f"{self.dataNasc}", "senha": f"{self.senha}"})
+
+
+
+#----------------------------------Verifica se Existi à tabela FINANCE no Banco de Dados-----------------------------------------------------------------------
 
 verify = cur.execute("SELECT name FROM sqlite_master WHERE name ='finance' ")
-
 verify = cur.fetchone()
-
 # Se a Tabela não for Criada no banco, executa a função create_sql()
 if verify is None:
-    ConectionForm().create_sql()
+    Finance().create_sql()
+
+#----------------------------------Verifica se Existi à tabela USER no Banco de Dados-----------------------------------------------------------------------
+verify = cur.execute("SELECT name FROM sqlite_master WHERE name ='users' ")
+verify = cur.fetchone()
+# Se a Tabela não for Criada no banco, executa a função create_sql()
+if verify is None:
+    User().create_sql()

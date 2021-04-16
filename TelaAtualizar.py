@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from ConexaoBD import ConectionForm
+from ConexaoBD import Finance
 
 
 class TelaUpdate(object):
@@ -141,13 +141,14 @@ class TelaUpdate(object):
         self.lineEdit_7.setText(f'{l[6]}') # Devendo
         self.lineEdit_8.setText(f'{l[7]}') # Status
 
+
         self.pushButton.clicked.connect(self.atualizar_dados)
 
 
     def atualizar_dados(self):
-        c = ConectionForm().atualizar(self.lineEdit.text(),self.lineEdit_2.text(),self.lineEdit_3.text(),
-                                      self.lineEdit_4.text(), self.lineEdit_5.text(), self.lineEdit_6.text(),
-                                      self.lineEdit_7.text(), self.lineEdit_8.text())
+        c = Finance().atualizar(self.lineEdit.text(), self.lineEdit_2.text(), self.lineEdit_3.text(),
+                                self.lineEdit_4.text(), self.lineEdit_5.text(), self.lineEdit_6.text(),
+                                self.lineEdit_7.text(), self.lineEdit_8.text())
 
         return c
 
@@ -165,7 +166,8 @@ def select(dado):
     valorPag = dado[0][5]
     devendo = dado[0][6]
     status = dado[0][7]
-    lista = [id, desc, valor, dataVenc, dataPag, valorPag, devendo, status]
+    cpf = dado[0][8]
+    lista = [id, desc, valor, dataVenc, dataPag, valorPag, devendo, status,cpf]
 
     return select_01()
 
@@ -181,7 +183,8 @@ def select_01():
     valorPag = lista[5]
     devendo = lista[6]
     status =  lista[7]
-    l = [id,desc,valor, dataVenc, dataPag, valorPag, devendo, status]
+    cpf = lista[8]
+    l = [id,desc,valor, dataVenc, dataPag, valorPag, devendo, status,cpf]
 
     return l
 
