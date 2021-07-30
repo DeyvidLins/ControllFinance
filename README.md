@@ -4,7 +4,7 @@
 
 Como Transformar um arquivo IU(Feito arquivo XML em um script .py):
 
-1 - Vá no diretório onde está instalado o seu python e cópie o caminho: Ex.: C:\Users\NAME_USER\AppData\Local\Programs\Python\Python39;
+1 - Vá no diretório onde está instalado o python e cópie o caminho: Ex.: C:\Users\NAME_USER\AppData\Local\Programs\Python\Python39;
 
 2 - Abra o prompt de comando de sua preferência e cole o caminho:
 
